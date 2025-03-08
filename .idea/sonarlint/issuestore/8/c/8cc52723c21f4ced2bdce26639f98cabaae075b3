@@ -1,0 +1,9 @@
+
+R
+java:S1141"5Extract this nested try block into a separate method.(ύκ­8…ϋΔ―Χ2
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(™Ωμ—ϊÿÿÿÿ8†ϋΔ―Χ2
+¶
+java:S6548	"A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ƒ™Ψ8Ϋ…Λ―Χ2
+G	java:S106"+Replace this use of System.out by a logger.(»Χεχ8‹ϋΔ―Χ2
+>
+java:S1116)"Remove this empty statement.(τμϊÿÿÿÿ8ΠΕ―Χ2
