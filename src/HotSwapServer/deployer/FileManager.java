@@ -13,7 +13,7 @@ import static HotSwapServer.config.ServerConfig.SOURCE_FILE_PATH;
  * - 지정된 로컬 소스 파일을 읽어 스트림으로 데이터 전달
  * - outPut 스트림을 전달 받아 데이터 전달
  * - 업뎉이트 대상 파일이 없는 경우 전송하지 않음
- * todo : 1:M 전송 기능 구현, 인터페이스 분리
+ * todo : 1:M 전송 기능 구현, 인터페이스 분리, DB 기반 파일 관리
  */
 public class FileManager {
 
