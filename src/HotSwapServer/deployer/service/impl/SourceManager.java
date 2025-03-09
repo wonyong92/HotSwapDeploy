@@ -1,4 +1,4 @@
-package HotSwapServer.deployer;
+package HotSwapServer.deployer.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import static HotSwapServer.config.ServerConfig.SOURCE_FILE_PATH;
 /**
  * SourceManager.java
  *
- * 작성자: [사용자 이름]
+ * 작성자: 장원용
  * 작성일: 2025-03-09
  *
  * 기능:
@@ -19,7 +19,7 @@ import static HotSwapServer.config.ServerConfig.SOURCE_FILE_PATH;
  *  todo : 응답 객체 구조화, 인터페이스 분리
  */
 
-public class SourceManager {
+public class SourceManager implements HotSwapServer.deployer.service.interfaces.SourceManager {
     private static SourceManager instance;
 
     private SourceManager() {}
@@ -31,11 +31,13 @@ public class SourceManager {
         return instance;
     }
 
+    @Override
     public boolean isJavaFileExists(String fileName) {
         File file = new File(SOURCE_FILE_PATH, fileName);
         return file.exists() && file.isFile() && fileName.endsWith(".java");
     }
 
+    @Override
     public List<String> getJavaFileList() {
         List<String> javaFiles = new ArrayList<>();
         File directory = new File(SOURCE_FILE_PATH);

@@ -1,4 +1,4 @@
-package HotSwapServer.deployer;
+package HotSwapServer.deployer.service.impl;
 
 import java.io.*;
 
@@ -15,7 +15,7 @@ import static HotSwapServer.config.ServerConfig.SOURCE_FILE_PATH;
  * - 업뎉이트 대상 파일이 없는 경우 전송하지 않음
  * todo : 1:M 전송 기능 구현, 인터페이스 분리, DB 기반 파일 관리
  */
-public class FileManager {
+public class FileManager implements HotSwapServer.deployer.service.interfaces.FileManager {
 
     private static final FileManager instance = new FileManager();
         // 생성자 private -> 외부에서 직접 인스턴스 생성 방지
