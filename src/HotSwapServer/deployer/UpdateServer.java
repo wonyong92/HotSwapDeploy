@@ -10,7 +10,7 @@ import static HotSwapServer.config.ServerConfig.SOURCE_FILE_PATH;
 public class UpdateServer {
        public static void main(String[] args) {
            ConnectionManager connectionManager = ConnectionManager.getInstance();
-
+           FileManager fileManager = FileManager.getInstance();
     }
 
 
