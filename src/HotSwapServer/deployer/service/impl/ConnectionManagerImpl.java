@@ -55,7 +55,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
                     String request = in.readLine();
                     if (REQUEST_TOKEN.equals(request)) {
                         String clientId = generateClientId();
-                        Connector connector = new Connector(in,out);
+                        Connector connector = new Connector(clientSocket);
                         clientConnectionManager.addConnector(clientId,connector);
                         return out;
                     }

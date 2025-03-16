@@ -1,5 +1,8 @@
 package HotSwapServer.deployer.service.impl;
 
+import HotSwapServer.config.ServerConfig;
+import HotSwapServer.deployer.dao.impl.Connector;
+
 import java.io.*;
 
 import static HotSwapServer.config.ServerConfig.SOURCE_FILE_PATH;
@@ -15,43 +18,45 @@ import static HotSwapServer.config.ServerConfig.SOURCE_FILE_PATH;
  * - 업뎉이트 대상 파일이 없는 경우 전송하지 않음
  * todo : 1:M 전송 기능 구현, 인터페이스 분리, DB 기반 파일 관리
  */
-public class FileManager implements HotSwapServer.deployer.service.interfaces.FileManager {
+public class FileManager  {
 
-    private static final FileManager instance = new FileManager();
-        // 생성자 private -> 외부에서 직접 인스턴스 생성 방지
+    private static FileManager instance;
+
+    // private 생성자로 외부에서 직접 인스턴스 생성 방지
     private FileManager() {}
 
-    // 싱글톤 인스턴스 반환
+    /** 싱글톤 인스턴스를 반환 */
     public static FileManager getInstance() {
+        if (instance == null) {
+            synchronized (FileManager.class) { // 멀티스레드 환경에서 동기화 보장
+                if (instance == null) {
+                    instance = new FileManager();
+                }
+            }
+        }
         return instance;
     }
 
-    private static boolean sendFile(BufferedWriter out, String fileName) throws IOException {
 
-        File file = new File(SOURCE_FILE_PATH+fileName);
+    public void transferFile(String fileName, Connector connector) {
+        try {
+            File file = new File(ServerConfig.SOURCE_FILE_PATH + fileName);
+            if (!file.exists()) {
+                connector.getWriteStream().write("File not found\n");
+                connector.getWriteStream().flush();
+                return;
+            }
 
-        boolean isExistFile = (file.exists() && file.isFile());
-
-        if(out == null){
-            System.out.println("outPut 스트림 닫힘 확인 필요");
-            out.flush();
-            return false;
-        }
-        else if (!isExistFile) {
-            out.write("ERROR: File not found\n");
-            out.flush();
-            return false;
-        }
-
-        try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
+            BufferedReader fileReader = new BufferedReader(new FileReader(file));
+            BufferedWriter writer = connector.getWriteStream();
             String line;
             while ((line = fileReader.readLine()) != null) {
-                out.write(line + "\n");
+                writer.write(line + "\n");
             }
-            out.write("END_OF_FILE\n");
-            out.flush();
-            System.out.println("소스 파일 전송 완료.");
-            return true;
+            writer.flush();
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
